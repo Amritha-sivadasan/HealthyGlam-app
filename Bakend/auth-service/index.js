@@ -2,7 +2,7 @@ const express = require("express");
 const dotenv = require("dotenv");
 const app = express();
 const mongoose = require('mongoose');
-const UserRoute=require('./Routes/userRoute')
+const UserRoute=require('../user-service/Routes/userRoute')
 dotenv.config()
 
 app.use(express.json());
