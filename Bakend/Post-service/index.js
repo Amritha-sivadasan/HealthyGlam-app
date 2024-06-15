@@ -7,10 +7,8 @@ dotenv.config()
 
 app.use(express.json());
 
-app.get("/", (req, res) => {
-  res.json("success");
-});
-app.use('/post',postRoute)
+
+app.use('/',postRoute)
   
 mongoose
   .connect(process.env.MONGO_URL)
@@ -22,5 +20,5 @@ mongoose
   });
 
 app.listen(process.env.PORT, () => {
-  console.log(" user server is running on the port 4000");
+  console.log(" user server is running on the port 4002");
 });

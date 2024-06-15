@@ -7,7 +7,7 @@ app.use(express.json())
 const commentRoute= require('./Routes/commentRoute')
 
 
-app.use('/comment',commentRoute)
+app.use('/',commentRoute)
 mongoose.connect(process.env.MONGO_URL).then(()=>{
     console.log('mongodb is connected in comment service');
 }).catch(()=>{

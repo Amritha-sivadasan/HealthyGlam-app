@@ -1,7 +1,7 @@
 const express =require('express')
-const {} =require('../Controller/commentController')
+const {SaveComment} =require('../Controller/commentController')
 
 const route= express.Router()
-route.post('/comment',)
+route.post('/addComment',SaveComment)
 
 module.exports=route

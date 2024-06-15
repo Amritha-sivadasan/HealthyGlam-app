@@ -1,12 +1,13 @@
 {
-  "name": "comment-service",
+  "name": "postdetails-service",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon Backend/comment-service/index.js",
-    "start": "node Backend/comment-service/index.js"
+  "dev": "nodemon Bakend/postdetails-service/index.js",
+    "start": "node Bakend/postdetails-service/index.js"
   },
+  "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {

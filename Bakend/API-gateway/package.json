@@ -1,0 +1,19 @@
+{
+  "name": "api-gateway",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+       "dev": "nodemon  Bakend/API-gateway/index.js",
+    "start": "node  Bakend/API-gateway/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "express-http-proxy": "^2.0.0",
+    "nodemon": "^3.1.3"
+  }
+}

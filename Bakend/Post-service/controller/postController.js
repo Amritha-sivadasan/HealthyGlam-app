@@ -1,28 +1,27 @@
-  const Post= require('../model/postModel')
+const Post = require("../model/postModel");
 
-const addPost=async (req,res)=>{
-    const {title,description,image}=req.body
+const { publisher } = require("../util/postPublisher");
 
-    console.log("this is from post controller",req.body);
-    try {
-        const post=new Post({title,description,image})
-        post.save()
-         res.json('New evnt added')
- 
-    } catch (error) {
-        console.log('error from add post',error.message);
-    }
-}
+const addPost = async (req, res) => {
+  const { title, description, image } = req.body;
 
- const getPost=async(req,res)=>{
+  console.log("this is from post controller", req.body);
   try {
-       const db= await Post.find({})
-         res.status(200).json(db)
+    const post = new Post({ title, description, image });
+    post.save();
+    publisher({ type:"POST_CREATED", data: post });
 
+    res.status(201).json({ message: "New event added", post });
   } catch (error) {
-    
+    console.log("error from add post", error.message);
   }
- }
+};
 
+const getPost = async (req, res) => {
+  try {
+    const db = await Post.find({});
+    res.status(200).json(db);
+  } catch (error) {}
+};
 
-module.exports={addPost,getPost}
+module.exports = { addPost, getPost };
