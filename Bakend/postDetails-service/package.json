@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-  "dev": "nodemon Bakend/postdetails-service/index.js",
+    "dev": "nodemon Bakend/postdetails-service/index.js",
     "start": "node Bakend/postdetails-service/index.js"
   },
   "keywords": [],
@@ -12,6 +12,7 @@
   "license": "ISC",
   "dependencies": {
     "amqplib": "^0.10.4",
+    "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "jsonwebtoken": "^9.0.2",

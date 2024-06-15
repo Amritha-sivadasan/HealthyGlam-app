@@ -20,6 +20,7 @@ const register = async (req, res, next) => {
 
 const login = async (req, res) => {
   const { email, password } = req.body;
+  console.log(req.body);
   try {
     const existUser = await User.findOne({ email });
     if (!existUser) {

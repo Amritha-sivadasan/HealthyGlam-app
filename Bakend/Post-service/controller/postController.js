@@ -17,11 +17,4 @@ const addPost = async (req, res) => {
   }
 };
 
-const getPost = async (req, res) => {
-  try {
-    const db = await Post.find({});
-    res.status(200).json(db);
-  } catch (error) {}
-};
-
-module.exports = { addPost, getPost };
+module.exports = { addPost, };

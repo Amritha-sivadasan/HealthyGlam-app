@@ -4,6 +4,7 @@ const app = express();
 const mongoose = require("mongoose");
 const postDetails= require('./Controller/postDetailController')
 const  {consumerPost}=require('./utils/postConsumer')
+const {consumerComment}= require('./utils/commentConsumer')
 
 dotenv.config()
 
@@ -20,6 +21,7 @@ mongoose
   });
 
   consumerPost(); 
+  consumerComment()
 
 app.listen(process.env.PORT, () => {
   console.log(" user server is running on the port 4004");

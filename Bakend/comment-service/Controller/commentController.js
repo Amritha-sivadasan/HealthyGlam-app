@@ -1,4 +1,5 @@
  const Comment= require('../model/commentModel')
+const {commentpublisher}=require('../util/commentPublisher')
 
 
  const SaveComment=async(req,res)=>{
@@ -6,6 +7,7 @@
     try {
       const newComment=new Comment({userId,postId,comment})
        newComment.save()
+       commentpublisher({type:'COMMENT_CREATE',data:newComment})
        res.status(200).json('success')
         
     } catch (error) {

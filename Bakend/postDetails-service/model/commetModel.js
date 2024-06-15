@@ -14,6 +14,6 @@ const commentScheama=mongoose.Schema({
        }
 },{timestamps:true})
 
-const comment=mongoose.model('Comment',commentScheama)
+const comment=mongoose.model('CommentDetails',commentScheama)
  
 module.exports=comment

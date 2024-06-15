@@ -7,8 +7,6 @@ dotenv.config();
 
 app.use(express.json());
 
-
-
 app.use("/", UserRoute);
 
 mongoose

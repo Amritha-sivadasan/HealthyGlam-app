@@ -5,42 +5,7 @@ const tips = [
       "Drinking water is essential for maintaining good health. Make sure to drink at least 8 glasses of water a day.",
     image: "https://via.placeholder.com/150", // Placeholder image URL
   },
-  {
-    title: "Take Regular Breaks",
-    description:
-      "Taking short breaks during work can help you stay focused and productive.",
-    image: "https://via.placeholder.com/150",
-  },
-  {
-    title: "Maintain a Balanced Diet",
-    description:
-      "Eating a variety of foods ensures you get all the necessary nutrients.",
-    image: "https://via.placeholder.com/150",
-  },
-  {
-    title: "Exercise Regularly",
-    description:
-      "Regular physical activity can improve your muscle strength and boost your endurance.",
-    image: "https://via.placeholder.com/150",
-  },
-  {
-    title: "Get Enough Sleep",
-    description:
-      "Aim for at least 7-8 hours of sleep each night to feel well-rested and alert.",
-    image: "https://via.placeholder.com/150",
-  },
-  {
-    title: "Practice Mindfulness",
-    description:
-      "Mindfulness can help reduce stress and improve your overall well-being.",
-    image: "https://via.placeholder.com/150",
-  },
-  {
-    title: "Stay Positive",
-    description:
-      "A positive mindset can improve your health and relationships.",
-    image: "https://via.placeholder.com/150",
-  },
+ 
 ];
 
 export default function HomePage() {
