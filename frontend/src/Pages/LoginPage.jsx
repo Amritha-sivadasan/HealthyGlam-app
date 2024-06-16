@@ -1,25 +1,27 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
- import axios from 'axios'
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Perform validation
     if (!email || !password) {
       setError("Please enter both email and password.");
       return;
     }
-     
+
     try {
       const response = await axios.post("/api/user", { email, password });
-      console.log(response.data); 
-      console.log("Login successful");
+      console.log(response.data);
+      localStorage.setItem("user", JSON.stringify(response.data.user));
+      localStorage.setItem("token", response.data.token);
+      navigate("/");
     } catch (error) {
       console.error(error);
       setError("Failed to login. Please try again.");

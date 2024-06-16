@@ -1,6 +1,6 @@
 function AddPosts() {
   return (
-    <div className="bg-gray-100 min-h-screen flex flex-col items-center justify-center p-6">
+    <div className="bg-gray-100 min-h-screen flex flex-col items-center justify-center p-6 ">
       <h1 className="text-3xl font-bold mb-6">Add Your Post</h1>
       <div className="bg-white p-8 rounded shadow-md w-full max-w-md border border-gray-300">
         <form action="" className="flex flex-col space-y-4">
@@ -13,7 +13,7 @@ function AddPosts() {
             placeholder="Enter description"
             className="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 h-32 resize-none"
           />
-        <input
+          <input
             type="file"
             id="image"
             accept="image/*"

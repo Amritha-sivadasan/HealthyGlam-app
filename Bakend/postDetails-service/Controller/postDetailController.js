@@ -1,14 +1,21 @@
-  const PostDetails=require('../model/PostDetailsModel')
+const PostDetails = require("../model/PostDetailsModel");
+const CommentDetails = require("../model/commetModel");
 
-const getPost=async(req,res)=>{
-    try {
-        const allPost= await PostDetails.find({})
-         res.status(200).json(allPost)
+const getPost = async (req, res) => {
+  try {
+    const allPost = await PostDetails.aggregate([
+      {
+        $lookup: {
+          from: "commentdetails", 
+          localField: "_id", 
+          foreignField: "postId", 
+          as: "Comments", 
+        },
+      },
+    ]);
 
-    } catch (error) {
-        
-    }
-}
+    res.status(200).json(allPost);
+  } catch (error) {}
+};
 
-
-module.exports =getPost
+module.exports = getPost;

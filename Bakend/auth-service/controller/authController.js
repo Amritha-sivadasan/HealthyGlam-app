@@ -21,22 +21,32 @@ const register = async (req, res, next) => {
 const login = async (req, res) => {
   const { email, password } = req.body;
   console.log(req.body);
+
   try {
     const existUser = await User.findOne({ email });
     if (!existUser) {
-      return res.json({ msg: "user not found" });
+      return res.status(404).json({ msg: "User not found" });
     }
-    if (!existUser.password == password) {
-      return res.json({ msg: "Password is incorrect" });
+
+    if (existUser.password !== password) {
+      return res.status(400).json({ msg: "Password is incorrect" });
     }
+
     const token = jwt.sign({ id: existUser._id }, process.env.JWT_SECRET, {
       expiresIn: "5h",
     });
-    res.status(200).json({ existUser, token });
+
+    // Rename the destructured password to avoid conflict
+    const { password: userPassword, ...userWithoutPassword } = existUser._doc;
+
+    res.status(200).json({ user: userWithoutPassword, token });
   } catch (error) {
     console.log(error.message);
-    res.status(500).json("server error");
+    res.status(500).json("Server error");
   }
 };
+
+
+
 
 module.exports = { register, login };
