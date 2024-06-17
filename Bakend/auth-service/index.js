@@ -19,5 +19,5 @@ mongoose
   });
 
 app.listen(process.env.PORT, () => {
-  console.log(" user server is running on the port 4001");
+  console.log(" user server is running on the port 3001");
 });

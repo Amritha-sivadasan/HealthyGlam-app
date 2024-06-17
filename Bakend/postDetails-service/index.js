@@ -8,6 +8,7 @@ const {consumerComment}= require('./utils/commentConsumer')
 
 dotenv.config()
 
+
 app.use(express.json());
 app.get('/',postDetails)
 
@@ -23,6 +24,7 @@ mongoose
   consumerPost(); 
   consumerComment()
 
+
 app.listen(process.env.PORT, () => {
-  console.log(" user server is running on the port 4004");
+  console.log(" user server is running on the port 3004");
 });
