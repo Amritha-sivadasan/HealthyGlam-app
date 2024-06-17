@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: auth-depl
+  name: postDetails-depl
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: auth
+      app: postDetails
   template:
     metadata:
       labels:
-        app: auth
+        app: postDetails
     spec:
       containers:
-        - name: auth
-          image: amrithas172/auth-service:latest
+        - name: postDetails
+          image: amrithas172/postDetails-service:latest
           resources:
             limits:
               cpu: "1"
@@ -22,23 +22,24 @@ spec:
             requests:
               cpu: "0.5"
               memory: "256Mi"
+
           env:
             - name: MONGODB_URI
               valueFrom:
                 secretKeyRef:
                   name: mongodb-secret
-                  key: mongodb-uri    
+                  key: mongodb-uri  
 
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: auth-service
+  name: postDetails-service
 spec:
   selector:
-    app: auth
+    app: postDetails
   ports:
-    - name: auth
+    - name: postDetails
       protocol: TCP
-      port: 3001
-      targetPort: 3001
+      port: 3004
+      targetPort: 3004

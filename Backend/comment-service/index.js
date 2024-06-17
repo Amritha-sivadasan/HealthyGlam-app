@@ -5,6 +5,7 @@ dotenv.config()
 const app= express()
 app.use(express.json())
 const commentRoute= require('./Routes/commentRoute')
+const {createChannel}=require('./rabbitmq/rabbitmq')
 
 
 app.use('/',commentRoute)
@@ -13,6 +14,7 @@ mongoose.connect(process.env.MONGO_URL).then(()=>{
 }).catch(()=>{
     console.log('database connection error from commment service');
 })
+createChannel()
 
 app.listen(process.env.PORT,()=>{
     console.log('server is running on the port 3002');

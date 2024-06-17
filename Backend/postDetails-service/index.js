@@ -5,6 +5,8 @@ const mongoose = require("mongoose");
 const postDetails= require('./Controller/postDetailController')
 const  {consumerPost}=require('./utils/postConsumer')
 const {consumerComment}= require('./utils/commentConsumer')
+const {createChannel} =require('./rabbitmq/rabbitmq')
+
 
 dotenv.config()
 
@@ -12,6 +14,7 @@ dotenv.config()
 app.use(express.json());
 app.get('/',postDetails)
 
+createChannel()
 mongoose
   .connect(process.env.MONGO_URL)
   .then(() => {

@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: auth-depl
+  name: comment-depl
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: auth
+      app: comment
   template:
     metadata:
       labels:
-        app: auth
+        app: comment
     spec:
       containers:
-        - name: auth
-          image: amrithas172/auth-service:latest
+        - name: comment
+          image: amrithas172/comment-service:latest
           resources:
             limits:
               cpu: "1"
@@ -33,12 +33,12 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: auth-service
+  name: comment-service
 spec:
   selector:
-    app: auth
+    app: comment
   ports:
-    - name: auth
+    - name: comment
       protocol: TCP
-      port: 3001
-      targetPort: 3001
+      port: 3002
+      targetPort: 3002
