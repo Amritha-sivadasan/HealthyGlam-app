@@ -8,7 +8,7 @@ const commentRoute= require('./Routes/commentRoute')
 const {createChannel}=require('./rabbitmq/rabbitmq')
 
 
-app.use('/',commentRoute)
+app.use('/api/comment',commentRoute)
 mongoose.connect(process.env.MONGO_URL).then(()=>{
     console.log('mongodb is connected in comment service');
 }).catch(()=>{

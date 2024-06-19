@@ -7,7 +7,7 @@ dotenv.config();
 
 app.use(express.json());
 
-app.use("/", UserRoute);
+app.use("/api/user", UserRoute);
 
 mongoose
   .connect(process.env.MONGO_URL)

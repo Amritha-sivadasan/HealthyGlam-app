@@ -1,0 +1,96 @@
+version: "3.4"
+services:
+  rabbitmq:
+    container_name: rabbitmq
+    image: rabbitmq:3.12.14-management
+    restart: unless-stopped
+    ports:
+      - 5672:5672
+      - 15672:15672
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    networks:
+      - my_network
+
+  # auth_service:
+  #   build:
+  #     context: ./Backend/auth-service
+  #     dockerfile: Dockerfile
+  #   container_name: auth_service
+  #   environment:
+  #     - NODE_ENV=development
+  #     - MONGO_URL=mongodb+srv://amrithas172:jRc3s5RJmvjqXEmC@user.mnmdarm.mongodb.net/User?retryWrites=true&w=majority&appName=User
+  #     - RABBITMQ_URL=amqp://rabbitmq:5672
+  #   depends_on:
+  #     - rabbitmq
+  #   ports:
+  #     - "3001:3001"
+  #   networks:
+  #     - my_network
+  # post_details_service:
+  #   build:
+  #     context: ./Backend/postDetails-service
+  #     dockerfile: Dockerfile
+  #   container_name: post_details_service
+  #   environment:
+  #     - NODE_ENV=development
+  #     - MONGO_URL=mongodb+srv://amrithas172:jRc3s5RJmvjqXEmC@user.mnmdarm.mongodb.net/User?retryWrites=true&w=majority&appName=User
+  #     - RABBITMQ_URL=amqp://rabbitmq:5672
+  #   depends_on:
+  #     - rabbitmq
+  #   ports:
+  #     - "3004:3004"
+  #   networks:
+  #     - my_network
+
+  # comment_service:
+  #   build:
+  #     context: ./Backend/comment-service
+  #     dockerfile: Dockerfile
+  #   container_name: comment_service
+  #   environment:
+  #     - NODE_ENV=development
+  #     - MONGO_URL=mongodb+srv://amrithas172:jRc3s5RJmvjqXEmC@user.mnmdarm.mongodb.net/User?retryWrites=true&w=majority&appName=User
+  #     - RABBITMQ_URL=amqp://rabbitmq:5672
+  #   depends_on:
+  #     - rabbitmq
+  #     - post_details_service
+  #   ports:
+  #     - "3002:3002"
+  #   networks:
+  #     - my_network
+
+  post_service:
+    build:
+      context: ./Backend/post-service
+      dockerfile: Dockerfile
+    container_name: post_service
+    environment:
+      NODE_ENV: "development"
+      MONGO_URL: "mongodb+srv://amrithas172:jRc3s5RJmvjqXEmC@user.mnmdarm.mongodb.net/User?retryWrites=true&w=majority&appName=User"
+      RABBITMQ_URL: "amqp://rabbitmq:5672"
+    depends_on:
+      - rabbitmq
+
+    ports:
+      - "3003:3003"
+    networks:
+      - my_network
+
+  # nginx:
+  #   build: ./Backend/gateway
+  #   container_name: nginx
+  #   ports:
+  #     - 8000:80
+  #   networks:
+  #     - my_network
+  #   depends_on:
+  #     - post_details_service
+  #     - post_service
+  #     - comment_service
+  #     - auth_service
+
+networks:
+  my_network:
+    driver: bridge

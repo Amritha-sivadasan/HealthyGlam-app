@@ -3,7 +3,7 @@ const {addPost} =require('../controller/postController')
 
 const router= express.Router()
 
-router.post('/newPost',addPost)
+router.post('/',addPost)
 
 
 module.exports=router
