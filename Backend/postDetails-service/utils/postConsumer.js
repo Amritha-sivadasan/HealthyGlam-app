@@ -1,39 +1,43 @@
-const {createChannel} = require("../rabbitmq/rabbitmq");
- const Post=require('../model/PostDetailsModel')
+const { createChannel } = require("../rabbitmq/rabbitmq");
+const Post = require("../model/PostDetailsModel");
 
-exports.consumerPost = () => {
-  createChannel((channel) => {
-    const exchange = "post";
-    channel.assertExchange(exchange, "fanout", { durable: true });
-    channel.assertQueue("", { exclusive: true }, (err, q) => {
-      if (err) {
-        console.error(`Failed to declare queue: ${err.message}`);
-        process.exit(1);
-      }
-      channel.bindQueue(q.queue, exchange, "");
-      console.log(
-        " [*] Waiting for messages in %s. To exit press CTRL+C",
-        q.queue
-      );
+consumerPost = async () => {
+  let connection; 
+  try {
+    console.log('this is consumer function');
+    const { connection: conn, channel } = await createChannel();
+    connection = conn; 
+    const queue="POST_CREATED";
 
-      channel.consume(q.queue, async (msg) => {
-        if (msg.content) {
-        
-          const postData = JSON.parse(msg.content.toString());
-          console.log(" [x] Received %s", postData);
-          try {
-            const { type, data } = postData;
+    await channel.assertQueue(queue, { durable: true }); // Ensure the queue exists
+    console.log('consumer is listening');
 
-            if (type === "POST_CREATED") {
-              const newPost = new Post(data);
-              await newPost.save();
-              console.log("Post saved to database:", newPost);
-            }
-          } catch (error) {
-            console.error("Failed to save post to database:", error.message);
-          }
+    channel.consume(queue, async (msg) => {
+      try {
+        if (msg !== null) {
+          console.log("Message Received:", msg.content.toString());
+          const msgContent = msg.content.toString();
+          const data = JSON.parse(msgContent);
+          console.log('data',data)
+          const { postId, title, description, image } = data;
+          const newPost = new Post({ postId, title, description, image });
+          await newPost.save();
+          channel.ack(msg); 
         }
-      }, { noAck: true });
+     
+      } catch (error) {
+        console.error("Error processing message:", error);
+      }
     });
-  });
+
+    console.log("Consumer started successfully.");
+  } catch (error) {
+    console.error("Error starting consumer:", error);
+  } finally {
+    if (connection) {
+      // connection.close(); 
+    }
+  }
 };
+
+module.exports={consumerPost}

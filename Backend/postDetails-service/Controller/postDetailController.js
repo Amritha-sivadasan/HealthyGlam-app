@@ -1,7 +1,8 @@
 const PostDetails = require("../model/PostDetailsModel");
-const CommentDetails = require("../model/commetModel");
+
 
 const getPost = async (req, res) => {
+  console.log('this is the get post function ');
   try {
     const allPost = await PostDetails.aggregate([
       {
@@ -14,8 +15,10 @@ const getPost = async (req, res) => {
       },
     ]);
 
-    res.status(200).json(allPost);
-  } catch (error) {}
+    res.status(200).send(allPost);
+  } catch (error) {
+    console.log('error in post details function ',error);
+  }
 };
 
 module.exports = getPost;

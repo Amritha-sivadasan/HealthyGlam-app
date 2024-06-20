@@ -9,7 +9,7 @@ const addPost = async (req, res) => {
   try {
     const post = new Post({ title, description, image });
     post.save();
-    publisher({ type:"POST_CREATED", data: post });
+    publisher("POST_CREATED", {postId:post._id,title,description,image} );
 
     res.status(201).json({ message: "New event added", post });
   } catch (error) {

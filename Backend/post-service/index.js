@@ -4,10 +4,14 @@ const app = express();
 const mongoose = require("mongoose");
 const postRoute=require('./Routes/postRoute')
 const {createChannel}= require('./rabbitmq/rabbitmq')
+
 dotenv.config()
 
 app.use(express.json());
-
+app.use((req,res,next)=>{
+  console.log('this is from the post service');
+  next()
+})
 
 app.use('/',postRoute)
   
@@ -21,6 +25,6 @@ mongoose
   });
   createChannel()
 
-app.listen(process.env.PORT, () => {
+app.listen(3003, () => {
   console.log(" user server is running on the port 3003");
 });

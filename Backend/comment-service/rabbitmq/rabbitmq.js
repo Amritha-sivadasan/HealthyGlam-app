@@ -14,7 +14,7 @@ const createChannel = async () => {
       const connection = await amqplib.connect(connectionString);
       rabbitmqChannel = await connection.createChannel();
       console.log("Connected to RabbitMQ");
-      return; // Exit the function once connected
+      return rabbitmqChannel; // Exit the function once connected
     } catch (error) {
       console.error("Error connecting to RabbitMQ:", error);
       retryCount++;

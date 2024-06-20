@@ -19,6 +19,7 @@ const register = async (req, res, next) => {
 };
 
 const login = async (req, res) => {
+  console.log("this is login");
   const { email, password } = req.body;
   console.log(req.body);
 
@@ -39,14 +40,11 @@ const login = async (req, res) => {
     // Rename the destructured password to avoid conflict
     const { password: userPassword, ...userWithoutPassword } = existUser._doc;
 
-    res.status(200).json({ user: userWithoutPassword, token });
+    res.status(200).send({ user: userWithoutPassword, token });
   } catch (error) {
     console.log(error.message);
     res.status(500).json("Server error");
   }
 };
-
-
-
 
 module.exports = { register, login };
