@@ -2,6 +2,9 @@ const mongoose = require('mongoose');
 
 
 const postSchema=mongoose.Schema({
+    userId:{
+        type:mongoose.Types.ObjectId
+    },
     title:{
         type:String,
         required:true

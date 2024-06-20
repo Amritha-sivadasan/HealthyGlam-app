@@ -25,6 +25,7 @@ mongoose
 
   createChannel().then(()=>{
     consumerPost()
+    consumerComment()
    
   })
 const PORT = 5000;

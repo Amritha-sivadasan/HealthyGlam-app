@@ -3,11 +3,12 @@ const {commentpublisher}=require('../util/commentPublisher')
 
 
  const SaveComment=async(req,res)=>{
+   
     const {userId,postId,comment}=req.body
     try {
       const newComment=new Comment({userId,postId,comment})
        newComment.save()
-       commentpublisher({type:'COMMENT_CREATE',data:newComment})
+       commentpublisher("COMMENT_CREATE",{postId,comment})
        res.status(200).json('success')
         
     } catch (error) {

@@ -19,8 +19,8 @@ consumerPost = async () => {
           const msgContent = msg.content.toString();
           const data = JSON.parse(msgContent);
           console.log('data',data)
-          const { postId, title, description, image } = data;
-          const newPost = new Post({ postId, title, description, image });
+          const { postId, title, description, image,userId } = data;
+          const newPost = new Post({ postId, title, description, image ,userId});
           await newPost.save();
           channel.ack(msg); 
         }

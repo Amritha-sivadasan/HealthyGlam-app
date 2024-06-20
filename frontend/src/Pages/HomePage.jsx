@@ -44,9 +44,9 @@ export default function HomePage() {
 
               <div className="mt-4 border-t pt-4">
                 <h3 className="text-lg font-semibold mb-2">Comments:</h3>
-                {tip.Comments.map((comment, commentIndex) => (
+                {tip.comment.map((comment, commentIndex) => (
                   <div key={commentIndex} className="flex items-center mb-2">
-                    <p className="text-gray-700">{comment.comment}</p>
+                    <p className="text-gray-700">{comment}</p>
                   </div>
                 ))}
               </div>

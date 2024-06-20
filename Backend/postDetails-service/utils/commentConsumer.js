@@ -1,42 +1,45 @@
 const { createChannel } = require("../rabbitmq/rabbitmq");
-const Comment = require("../model/commetModel");
+const Post = require("../model/PostDetailsModel");
 
-exports.consumerComment = () => {
-  createChannel((channel) => {
-    const exchange = "comment";
-    channel.assertExchange(exchange, "fanout", { durable: true });
-    channel.assertQueue("", { exclusive: true }, (err, q) => {
-      if (err) {
-        console.error(`Failed to declare queue: ${err.message}`);
-        process.exit(1);
+consumerComment= async () => {
+  let connection;
+  try {
+    console.log("this is consumer function");
+    const { connection: conn, channel } = await createChannel();
+    connection = conn;
+    const queue = "COMMENT_CREATE";
+
+    await channel.assertQueue(queue, { durable: true }); // Ensure the queue exists
+    console.log("consumer is listening");
+
+    channel.consume(queue, async (msg) => {
+      try {
+        if (msg !== null) {
+          console.log("Message Received:", msg.content.toString());
+          const msgContent = msg.content.toString();
+          const data = JSON.parse(msgContent);
+          console.log("data", data);
+          const { postId, comment } = data;
+          const postDetails = await Post.updateOne(
+            { postId: postId },
+            { $push: { comment: comment } }
+          );
+
+          channel.ack(msg);
+        }
+      } catch (error) {
+        console.error("Error processing message:", error);
       }
-      channel.bindQueue(q.queue, exchange, "");
-      console.log(
-        " [*] Waiting for messages in %s. To exit press CTRL+C",
-        q.queue
-      );
-
-      channel.consume(
-        q.queue,
-        async (msg) => {
-          if (msg.content) {
-            const commentData = JSON.parse(msg.content.toString());
-            console.log(" [x] Received %s", commentData);
-            try {
-              const { type, data } = commentData;
-
-              if (type === "COMMENT_CREATE") {
-                const newPost = new Comment(data);
-                await newPost.save();
-                console.log("Post saved to database:", newPost);
-              }
-            } catch (error) {
-              console.error("Failed to save post to database:", error.message);
-            }
-          }
-        },
-        { noAck: true }
-      );
     });
-  });
+
+    console.log("Consumer started successfully.");
+  } catch (error) {
+    console.error("Error starting consumer:", error);
+  } finally {
+    if (connection) {
+      // connection.close();
+    }
+  }
 };
+
+module.exports = { consumerComment };

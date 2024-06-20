@@ -1,21 +1,27 @@
 const mongoose =require('mongoose')
 
 const postDetailsSchema=mongoose.Schema({
+   userId:{
+      type:mongoose.Types.ObjectId
+   },
      postId:{
         type:mongoose.Types.ObjectId
      },
      title :{
         type :String,
-        required:true
+       
      },
      description:{
         type:String,
-        required:true
+    
      },
      image:{
         type:String,
 
      },
+     comment:[{
+      type:String
+     }]
 
 },{timestamps:true})
 
