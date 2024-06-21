@@ -23,10 +23,10 @@ app.get("/", (req, res) => {
 });
 
 const proxyTargets = {
-  auth: "http://auth_service:3001",
-  comment: "http://comment_service:3002",
-  post: "http://post_service:3003",
-  postDetails: "http://post_details_service:5000",
+  auth: "http://auth-service:3001",
+  comment: "http://comment-service:3002",
+  post: "http://post-service:3003",
+  postDetails: "http://post-details-service:5000",
 };
 
 app.use(
