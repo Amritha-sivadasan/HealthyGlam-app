@@ -1,24 +1,24 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: post-details-deployment
+  name: comment-deployment
   labels:
-    app: post-details-service
+    app: comment-service
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: post-details-service
+      app: comment-service
   template:
     metadata:
       labels:
-        app: post-details-service
+        app: comment-service
     spec:
       containers:
-      - name: post-details-service
-        image: amritha172/healthyglam-post_details_service:latest
+      - name: comment-service
+        image: amritha172/healthyglam-comment_service:latest
         ports:
-        - containerPort: 5000
+        - containerPort: 3002
         env:
         - name: NODE_ENV
           value: development
@@ -38,10 +38,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: post-details-service
+  name: comment-service
 spec:
   ports:
-  - port: 5000
-    targetPort: 5000
+  - port: 3002
+    targetPort: 3002
   selector:
-    app: post-details-service
+    app: comment-service

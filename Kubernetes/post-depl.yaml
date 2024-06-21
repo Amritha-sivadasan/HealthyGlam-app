@@ -1,34 +1,38 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: post-depl
+  name: post-deployment
+  labels:
+    app: post-service
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: post
+      app: post-service
   template:
     metadata:
       labels:
-        app: post
+        app: post-service
     spec:
       containers:
-        - name: post
-          image: amrithas172/post-service:latest
-          resources:
-            limits:
-              cpu: "1"
-              memory: "512Mi"
-            requests:
-              cpu: "0.5"
-              memory: "256Mi"
-          env:
-            - name: MONGODB_URI
-              valueFrom:
-                secretKeyRef:
-                  name: mongodb-secret
-                  key: mongodb-uri
-
+      - name: post-service
+        image: amritha172/healthyglam-post_service:latest
+        ports:
+        - containerPort: 3003
+        env:
+        - name: NODE_ENV
+          value: development
+        - name: MONGO_URL
+          value: mongodb+srv://amrithas172:jRc3s5RJmvjqXEmC@user.mnmdarm.mongodb.net/User?retryWrites=true&w=majority&appName=User
+        - name: RABBITMQ_URL
+          value: amqp://rabbitmq:5672
+        resources:
+          limits:
+            cpu: "1"
+            memory: "512Mi"
+          requests:
+            cpu: "0.5"
+            memory: "256Mi"
 
 ---
 apiVersion: v1
@@ -36,11 +40,8 @@ kind: Service
 metadata:
   name: post-service
 spec:
-  selector:
-    app: post
   ports:
-    - name: http
-      protocol: TCP
-      port: 3003
-      targetPort: 3003
-
+  - port: 3003
+    targetPort: 3003
+  selector:
+    app: post-service

@@ -1,33 +1,38 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: auth-depl
+  name: auth-deployment
+  labels:
+    app: auth-service
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: auth
+      app: auth-service
   template:
     metadata:
       labels:
-        app: auth
+        app: auth-service
     spec:
       containers:
-        - name: auth
-          image: amrithas172/auth-service:latest
-          resources:
-            limits:
-              cpu: "1"
-              memory: "512Mi"
-            requests:
-              cpu: "0.5"
-              memory: "256Mi"
-          env:
-            - name: MONGODB_URI
-              valueFrom:
-                secretKeyRef:
-                  name: mongodb-secret
-                  key: mongodb-uri    
+      - name: auth-service
+        image: amritha172/healthyglam-auth_service:latest
+        ports:
+        - containerPort: 3001
+        env:
+        - name: NODE_ENV
+          value: development
+        - name: MONGO_URL
+          value: mongodb+srv://amrithas172:jRc3s5RJmvjqXEmC@user.mnmdarm.mongodb.net/User?retryWrites=true&w=majority&appName=User
+        - name: RABBITMQ_URL
+          value: amqp://rabbitmq:5672
+        resources:
+          limits:
+            cpu: "1"
+            memory: "512Mi"
+          requests:
+            cpu: "0.5"
+            memory: "256Mi"
 
 ---
 apiVersion: v1
@@ -35,10 +40,8 @@ kind: Service
 metadata:
   name: auth-service
 spec:
-  selector:
-    app: auth
   ports:
-    - name: auth
-      protocol: TCP
-      port: 3001
-      targetPort: 3001
+  - port: 3001
+    targetPort: 3001
+  selector:
+    app: auth-service

@@ -37,7 +37,6 @@ const login = async (req, res) => {
       expiresIn: "5h",
     });
 
-    // Rename the destructured password to avoid conflict
     const { password: userPassword, ...userWithoutPassword } = existUser._doc;
 
     res.status(200).send({ user: userWithoutPassword, token });

@@ -7,34 +7,13 @@ metadata:
     nginx.ingress.kubernetes.io/use-regex: "true"
 spec:
   rules:
-    - host: post.com
+    - host: 
       http:
         paths:
-          - path: /api/user/?(.*)
+          - path: /api/?(.*)
             pathType: Prefix
             backend:
               service:
-                name: auth-service
+                name: api-gateway
                 port:
-                  number: 3001
-          - path: /api/comment/?(.*)
-            pathType: Prefix
-            backend:
-              service:
-                name: comment-service
-                port:
-                  number: 3002
-          - path: /api/post/?(.*)
-            pathType: Prefix
-            backend:
-              service:
-                name: post-service
-                port:
-                  number: 3003
-          - path: /api/getPost/?(.*)
-            pathType: Prefix
-            backend:
-              service:
-                name: postDetails-service
-                port:
-                  number: 3004
+                  number: 4000  

@@ -45,6 +45,7 @@ services:
       - "3001:3001"
     networks:
       - my_network
+      
   post_details_service:
     build:
       context: ./Backend/postDetails-service
